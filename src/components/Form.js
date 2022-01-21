@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Input from './Input.js';
 
 function Form(props) {
@@ -7,6 +7,18 @@ function Form(props) {
       author:'',
       phone:''
     });
+
+useEffect(() => {
+  if(props.notice) {
+    const { title, author, phone, id } = props.notice
+    setFormState({
+      title,
+      author,
+      phone,
+      id
+    })
+  }
+}, [props.notice])
 
   function handleChange(event) {
     setFormState(prevState => ({
