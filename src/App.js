@@ -8,6 +8,21 @@ import Nav from './components/Nav'
 
 function App() {
   const [noticesState, setNoticesState] = useState({notices: []})
+
+  useEffect(()=> {
+    async function getNotices() {
+      try {
+        const notices = await fetch('http://localhost:3000/notices')
+        .then(response => response.json())
+        console.log(notices)
+        setNoticesState({ notices });
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getNotices()
+  }, [])
+
   return (
     <div className="App">
       <div className='container'>
