@@ -1,11 +1,29 @@
+import { useState } from 'react'
+
 function Notice( props ) {
+
+const [ editFormVisible, setEditFormVisible ] = useState(false)
+
+function toggleForm() {
+  setEditFormVisible(!editFormVisible)
+}  
+
     return (
-      <div className="notice">
+      <>
+      { editFormVisible ?
+        <Form 
+          notice={props.notice}
+          toggleForm={toggleForm}
+        />
+        :
+        <div className="notice">
          <h3>{props.notice.title}</h3>
          <p>{props.notice.author}</p>
          <small>{props.notice.phone}</small>
-         <button onClick={()=> props.handleDelete(props.notice.id)}>X</button>
+         <button onClick={()=> props.handleDelete(props.notice)}>X</button>
        </div>
+    }
+      </>
     );
 }
 
