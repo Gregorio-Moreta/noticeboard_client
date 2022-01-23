@@ -52,6 +52,28 @@ function App() {
     }
   }
 
+  async function handleUpdate(formInputs) {
+    event.preventDefault()
+    try {
+          /* 
+      we'll destructure the formInputs values so we can seperate the id,
+      and use it for the url param. We don't want to send the id to the server
+      as it's not included in our rails controller permit params
+    */
+    const { title, author, phone, id } = formInputs
+    const notices = await fetch(`http://localhost:3000/notices/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'Application/json'
+      },
+      body: JSON.stringify({ title, author, phone }),
+    }).then(res => res.json())
+    setNoticesState({ notices })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="App">
       <div className='container'>
@@ -59,6 +81,7 @@ function App() {
         <Aside handleAdd={handleAdd} />
         <Main notices={noticesState.notices} 
               handleDelete={handleDelete}
+              handleUpdate={handleUpdate}
         />
         <Nav />
         <Footer />
